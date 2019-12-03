@@ -1,0 +1,142 @@
+#include <kipr/botball.h>
+int l_motor = 1;
+int r_motor = 2;
+int speed = 50;
+int speed_slow = 25;
+int counter = 0;
+int arm_port_0 = 0;
+int arm_port_3 = 3;
+int arm_up = 1500;
+int arm_down = 400;
+int servo_right = 20;
+int servo_left = 1950;
+int iteration_count = 0;
+int update_errors = 0;
+int green = 0; //green
+int orange = 1; //orange
+int pink = 2; //pink
+int main(){
+camera_open();
+while (1){
+
+camera_update();    
+
+
+
+if(get_object_count(orange) > 0){
+    //printf("number of squares=%d\n", get_object_count(orange));
+    //printf("x-axis=%d\n", get_object_center_x(orange, 1));
+    printf("y-axis=%d\n", get_object_center_y(orange, 1));
+    printf("I can see orange\n" );
+    if(get_object_center_x(orange, 0) > 80){
+    right_turn();
+    printf("right turn, orange\n" );
+    }     
+    if(get_object_center_x(orange, 0) < 80){
+    left_turn();
+    printf("left turn, orange\n" );
+    if(get_object_center_y(orange, 0) > 50){
+    break;
+    }   
+    }
+
+    // add if(>80, turn right)
+
+}
+    
+
+if(get_object_count(green) > 0){
+	printf("number of squares=%d\n", get_object_count(green));
+    printf("x-axis=%d\n", get_object_center_x(green, 0));
+    printf("y-axis =%d\n", get_object_center_y(green, 0));
+    printf("I can see green\n" );
+    if(get_object_center_x(green, 0) > 80){
+    right_turn();
+    printf("right turn, green\n" );    
+    }     
+    if(get_object_center_x(green, 0) < 80){
+    left_turn();
+    printf("left turn, green\n" );
+    if(get_object_center_y(green, 0) > 50){
+    break;
+    }    
+    }
+    
+    
+}
+    //add if(<80, turn left)
+if(get_object_count(pink) > 0){
+printf("number of squares=%d\n", get_object_count(pink));
+printf("x-axis=%d\n", get_object_center_x(pink, 2));
+printf("y-axis=%d\n", get_object_center_y(pink, 2));
+printf("I can see pink\n" );
+if(get_object_center_x(pink, 0) > 80){
+right_turn();
+printf("right turn, pink\n" );
+}
+if(get_object_center_x(pink, 0) < 80){
+left_turn();
+printf("left turn, pink\n" );
+if(get_object_center_y(pink, 0) > 50){
+break;
+}
+}
+stop();
+}
+//add if(<80, turn left)
+else{
+printf("not seeing seeing anything\n");
+
+     }
+}
+    
+camera_close();
+return 0;
+
+
+
+	}
+void forward(){
+motor(l_motor, speed);
+motor(r_motor, speed);
+}
+
+void backward(){
+motor(l_motor, -speed);
+motor(r_motor, -speed);
+
+}
+void wave_arm(){
+enable_servos();
+ao();
+set_servo_position(arm_port_3, arm_up);
+msleep(730);
+set_servo_position(arm_port_3, arm_down);
+msleep(1200);
+disable_servos();
+}
+
+void shake_head(){
+enable_servos();
+ao();
+set_servo_position(arm_port_0, arm_up);
+msleep(500);
+set_servo_position(arm_port_0, arm_down);
+msleep(1200);
+disable_servos();
+}
+void stop(){
+motor(l_motor, 0);
+motor(r_motor, 0);
+
+}
+
+void left_turn(){
+motor(l_motor, speed);
+motor(r_motor, -speed_slow);
+
+}
+void right_turn(){
+motor(l_motor, -speed_slow);
+motor(r_motor, speed);
+}
