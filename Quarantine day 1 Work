@@ -1,0 +1,20 @@
+// Created on Thu March 19 2020
+int l_motor = 0;
+int r_motor = 2;
+int speed = 40;
+int l_bump = 8;
+int r_bump = 9;
+
+int main(){
+while(digital(r_bump)==0){  // while the right bump is not being pushed, the following stuff happens
+motor(l_motor, speed);
+motor(r_motor, speed);
+msleep(200); //robot goes forward until right bump hits da line
+}
+while(digital(l_bump)==0){ // while the left bump is not being pushed, the following stuff happens
+	motor(l_motor, speed);
+motor(r_motor, 0);
+msleep(200); //left bump hits da line and I get a decent grade
+}
+return 0;
+}
