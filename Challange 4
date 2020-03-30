@@ -1,0 +1,92 @@
+// Created on Mon March 23 2020
+int motorl = 0;
+int motorr = 2;
+int middlerange = 1;
+int rightrange = 2;
+int speed =70;
+int speed_slow =40;
+int speed_fast=200;
+int right_ET= 6;
+int left_ET = 5;
+int l_bump = 8;
+
+
+int main(){
+    slight_turn(); //slightly turns
+    careful_now(); //carefully goes down
+    line_left(); //lines up with left line
+    follow_line(); // follows line
+back_on_line();
+    return 0;
+}
+
+void slight_turn(){
+    while(analog(rightrange) > 450){ //how close to wall
+    motor(motorl,speed);
+    printf("turning \n");
+    }
+
+}
+
+void careful_now(){
+    while(analog(middlerange) > 600){ // distance from bot wall
+    motor(motorl,speed_slow);
+    motor(motorr,speed_slow);
+    printf("being careful as we speak \n");
+    }
+
+}
+
+void line_left(){
+    motor(motorr,speed); // sleeping to turn
+    motor(motorl,-speed);
+    msleep(300);
+    printf("Finished \n");
+}
+void follow_line (){ // void for staying on line
+    while(analog(right_ET) == 0){
+         motor(motorl,speed_slow);
+        motor(motorr,speed_slow);
+    msleep(1);
+}
+while(analog(middlerange) > 60) {
+    if (analog(right_ET) > 10) {
+        motor(motorr, speed_slow);
+        motor(motorl, speed);
+        msleep(50);
+    }
+    if (analog(left_ET) > 10) {
+        motor(motorr, speed);
+        motor(motorl, speed_slow);
+        msleep(50);
+    }
+}
+}
+void back_on_line(){
+
+while(analog(middlerange) < 600){
+motor(motorr, speed_slow); //turn left to get back to line
+motor(motorl, -speed_fast);
+msleep(200);
+}
+if(analog(middlerange) > 25 ){
+ao;
+while(analog(right_ET) == 0){ //right does not see
+motor(motorr,speed_slow);
+motor(motorl,speed_slow);
+msleep(500); //go
+}
+while(analog(middlerange) > 600 ){
+if (analog(left_ET) > 10){ //left 2 right
+motor(motorr,speed);
+motor(motorl,speed_slow);
+msleep(50);
+}
+if (analog(right_ET) > 10){// right 2 left.
+motor(motorr, speed_slow);
+motor(motorl,speed);
+msleep(50);
+}
+}
+}
+}
