@@ -1,0 +1,31 @@
+int motorl = 0;
+int motorr = 2;
+int rightrange = 2;
+int rightreflect = 6;
+int turn_fast = 100;
+int turn_slow = 30;
+int counter = 0;
+int r_reflect = 6;
+int main(){
+follow_wall(); //runs the wallfollow
+return 0;
+}
+void follow_wall(){
+while(counter<4){
+if (analog(rightrange) < 425){ //if too close to wall...
+motor(motorr,turn_fast);
+motor(motorl,turn_slow); //turn left
+msleep(10);
+}
+if (analog(rightrange) > 425){ //If too far from wall...
+motor(motorl,turn_fast);
+motor(motorr,turn_slow); //turn right
+msleep(10);
+if (analog(r_reflect)>350) {
+counter++ ;
+msleep(150);
+printf("counting/n");
+}
+}
+}
+}
