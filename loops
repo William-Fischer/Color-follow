@@ -1,0 +1,24 @@
+int motorl = 0;
+int motorr = 2;
+int speed = 70;
+int main(){
+	loops(); //looooooooooooops broooooooooootheer
+	return 0;
+}
+void loops(){ //looping back and fourth
+	for(int i = 1; i < 7; i++){
+		foward();
+		bsckward();
+		printf("Run number: %d \n", i);
+	}
+}
+void foward(){
+	motor(motorr, speed);
+	motor(motorl, speed);
+	msleep(1000);
+}
+void bsckward(){
+	motor(motorr, -speed);
+	motor(motorl, -speed);
+	msleep(1000);
+}
